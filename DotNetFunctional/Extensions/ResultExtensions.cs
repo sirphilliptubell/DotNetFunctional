@@ -11,7 +11,7 @@ namespace System
     /// </summary>
     public static class ResultExtensions
     {
-        private const string DEFAULT_SEPARATOR = ", ";
+        internal const string DEFAULT_SEPARATOR = ", ";
 
         /// <summary>
         /// Combines the string into a single string using the specified separator.
@@ -171,7 +171,7 @@ namespace System
         /// <param name="results">The results to combine.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
-        public static IEnumerable<Result<T>> CombineSequential<T>(IEnumerable<Func<Result<T>>> functions)
+        public static IEnumerable<Result<T>> CombineSequential<T>(this IEnumerable<Func<Result<T>>> functions)
         {
             Contract.Requires<ArgumentNullException>(functions != null, nameof(functions));
             Contract.Requires<ArgumentException>(!functions.Any(x => x == null), "one of the functions is null");
