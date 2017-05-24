@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace System
 {
@@ -301,5 +302,76 @@ namespace System
             => this.IsFailure
             ? Result.Fail<T>(this.Error)
             : Result.Ok(item);
+
+        #region Static versions of extension methods
+
+        /// <summary>
+        /// Combines all the Results in the <paramref name="results" /> list.
+        /// If there are no failure results, a Success Result is returned.
+        /// If there are any failure results, a Failure Result is returned that contains all the
+        /// error messages (separated separated by <paramref name="errorMessagesSeparator" />.)
+        /// </summary>
+        /// <param name="errorMessagesSeparator">Separator for error messages. Defaults to a comma.</param>
+        /// <param name="results">The results to combine.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result CombineAll(IEnumerable<Result> results, string errorMessagesSeparator = ResultExtensions.DEFAULT_SEPARATOR)
+            => results.CombineAll(errorMessagesSeparator);
+
+        /// <summary>
+        /// Combines the results into a single result.
+        /// Returns all the errors in a single result if there are any.
+        /// Returns all the items as a success if there aren't any errors.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="errorMessagesSeparator">The error messages separator.</param>
+        /// <param name="results">The results to combine.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result<IEnumerable<T>> CombineAll<T>(IEnumerable<Result<T>> results, string errorMessagesSeparator = ResultExtensions.DEFAULT_SEPARATOR)
+            => results.CombineAll(errorMessagesSeparator);
+
+        /// <summary>
+        /// Combines the Results, one at a time.
+        /// Returns the first failure encountered, or a Success Result if there are no failures.
+        /// </summary>
+        /// <param name="results">The results to combine.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result CombineSequential(IEnumerable<Result> results)
+            => results.CombineSequential();
+
+        /// <summary>
+        /// Combines the Results, one at a time.
+        /// Returns the first failure encountered, or a Success Result if there are no failures.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="results">The results to combine.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result CombineSequential<T>(IEnumerable<Result<T>> results)
+            => results.CombineSequential();
+
+        /// <summary>
+        /// Combines the Results, one at a time.
+        /// Returns the first failure encountered, or a Success Result if there are no failures.
+        /// </summary>
+        /// <param name="results">The results to combine.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result CombineSequential(IEnumerable<Func<Result>> functions)
+            => functions.CombineSequential();
+
+        /// <summary>
+        /// Combines the Results of each function, one at a time.
+        /// Returns the first failure encountered, or all the results if there are no failures.
+        /// </summary>
+        /// <param name="results">The results to combine.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static IEnumerable<Result<T>> CombineSequential<T>(IEnumerable<Func<Result<T>>> functions)
+            => functions.CombineSequential();
+
+        #endregion Static versions of extension methods
     }
 }
