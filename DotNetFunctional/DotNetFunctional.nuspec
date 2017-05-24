@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>DotNetFunctional</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/sirphilliptubell/DotNetFunctional/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/sirphilliptubell/DotNetFunctional</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial Release.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Functional Library Extensions Monad Monads Monadic</tags>
+  </metadata>
+</package>
