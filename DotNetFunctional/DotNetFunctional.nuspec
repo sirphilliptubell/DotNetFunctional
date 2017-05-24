@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/sirphilliptubell/DotNetFunctional</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial Release.</releaseNotes>
+    <releaseNotes>Bug fix, added static method version of extension methods.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>Functional Library Extensions Monad Monads Monadic</tags>
   </metadata>
