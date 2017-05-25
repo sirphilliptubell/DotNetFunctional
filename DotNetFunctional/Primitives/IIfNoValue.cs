@@ -3,7 +3,6 @@
     /// <summary>
     /// Allows taking an action when a Maybe object doesn't have a value.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public interface IIfNoValue
     {
         /// <summary>

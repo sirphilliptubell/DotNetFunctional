@@ -5,7 +5,7 @@ namespace System
     /// <summary>
     /// Hidden implementation for IIfNoValue.
     /// </summary>
-    /// <seealso cref="System.IEquatable{System.Maybe{T}}" />
+    /// <seealso cref="System.IIfNoValue" />
     internal class IfNoValue
         : IIfNoValue
     {

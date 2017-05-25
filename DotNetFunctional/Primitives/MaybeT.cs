@@ -51,7 +51,6 @@ namespace System
         public bool HasNoValue
             => !HasValue;
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Maybe{T}"/> struct.
         /// </summary>
@@ -60,7 +59,7 @@ namespace System
             => _value = value;
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="T"/> to <see cref="Maybe{T}"/>.
+        /// Performs an implicit conversion from T to <see cref="Maybe{T}" />.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>
@@ -68,7 +67,6 @@ namespace System
         /// </returns>
         public static implicit operator Maybe<T>(T value)
             => new Maybe<T>(value);
-
 
         /// <summary>
         /// Gets the value or returns the specified default value.
@@ -198,7 +196,7 @@ namespace System
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         public override int GetHashCode()
             => HasNoValue
@@ -244,7 +242,7 @@ namespace System
         /// Returns the default value for {U} otherwise.
         /// </summary>
         /// <typeparam name="U"></typeparam>
-        /// <param name="selector">A function which maps the Value if there is one.</param>
+        /// <param name="map">The mapping function.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
         public Maybe<U> Map<U>(Func<T, U> map, U defaultValue = default(U))
@@ -258,7 +256,7 @@ namespace System
         /// Returns the default value for {U} otherwise.
         /// </summary>
         /// <typeparam name="U"></typeparam>
-        /// <param name="selector">A function which maps the Value if there is one.</param>
+        /// <param name="map">The mapping function.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
         public Maybe<U> Map<U>(Func<T, Maybe<U>> map, U defaultValue = default(U))
@@ -271,11 +269,9 @@ namespace System
         /// Converts the Maybe type to a Result type.
         /// If the Maybe has a Value, a Success Result is returned, otherwise a Failure Result is returned with the specified error.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="item">The maybe type to convert.</param>
         /// <param name="errorIfNoValue">The error message.</param>
-        /// <exception cref="ArgumentNullException">error - There must be error for a failure.</exception>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException">error - There must be error for a failure.</exception>
         public Result<T> ToResult(string errorIfNoValue)
             => HasValue
             ? Result.Ok(Value)

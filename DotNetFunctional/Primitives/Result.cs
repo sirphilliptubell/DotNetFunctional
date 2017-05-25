@@ -129,11 +129,21 @@ namespace System
             => new Result<T>(false, value, null);
 
         /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+            => IsSuccess
+            ? "Ok"
+            : "Failure: " + Error;
+
+        /// <summary>
         /// If this Result is a Failure, the same Result is returned.
         /// If this Result is a Success, returns a new Failure Result if the condition is
         /// false, otherwise returns a Success Result.
         /// </summary>
-        /// <param name="result">The result.</param>
         /// <param name="condition">The condition to check if this instance is a Success.</param>
         /// <param name="error">The error message to use if the condition is false.</param>
         /// <returns></returns>
@@ -156,7 +166,6 @@ namespace System
         /// If this Result is a Success, returns a new Failure Result if the predicate is
         /// false, otherwise returns a Success Result.
         /// </summary>
-        /// <param name="result">The result.</param>
         /// <param name="predicate">The predicate to check if this instance is a Success.</param>
         /// <param name="error">The error message to use if the predicate is false.</param>
         /// <returns></returns>
@@ -178,7 +187,6 @@ namespace System
         /// Returns a new Result regardless of whether this Result is a Success or Failure.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="onBoth">The function whose result to return.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -189,8 +197,6 @@ namespace System
         /// Performs the specified Action if the Result is a Failure.
         /// Returns the same Result.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="whenFailure">Called when the Result is a Failure.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -206,7 +212,6 @@ namespace System
         /// Performs the specified Action if the Result is a Failure.
         /// Returns the same Result.
         /// </summary>
-        /// <param name="result">The result.</param>
         /// <param name="whenFailure">Called if the Result is a Failure.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -223,7 +228,6 @@ namespace System
         /// If this Result is a Failure, returns the fail result.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="newSuccessValue">The new Success value to return.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -238,7 +242,6 @@ namespace System
         /// If this Result is a failure, returns the same Fail Result.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="getResult">Gets a new Result when the current Result is a Success.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -253,7 +256,6 @@ namespace System
         /// If this Result is a failure, returns the same Fail Result.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="getSuccessValue">Gets a new Success value when the current Result is a Success.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -266,7 +268,6 @@ namespace System
         /// If this Result is a Failure, the same result is returned.
         /// If this Result is a Success, the Result from the specified function is returned.
         /// </summary>
-        /// <param name="result">The result.</param>
         /// <param name="getResult">Gets the Result to return if the current Result is a Success.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -279,7 +280,6 @@ namespace System
         /// If this Result is a Success, performs the specified action.
         /// Returns this instance.
         /// </summary>
-        /// <param name="result">The result.</param>
         /// <param name="action">The action.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -356,7 +356,7 @@ namespace System
         /// Combines the Results, one at a time.
         /// Returns the first failure encountered, or a Success Result if there are no failures.
         /// </summary>
-        /// <param name="results">The results to combine.</param>
+        /// <param name="functions">The functions to combine.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
         public static Result CombineSequential(IEnumerable<Func<Result>> functions)
@@ -366,7 +366,8 @@ namespace System
         /// Combines the Results of each function, one at a time.
         /// Returns the first failure encountered, or all the results if there are no failures.
         /// </summary>
-        /// <param name="results">The results to combine.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="functions">The functions to combine.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
         public static IEnumerable<Result<T>> CombineSequential<T>(IEnumerable<Func<Result<T>>> functions)

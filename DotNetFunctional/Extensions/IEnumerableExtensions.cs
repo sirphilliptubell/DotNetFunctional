@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace System
 {
+    /// <summary>
+    /// Extension methods for IEnumerable
+    /// </summary>
     public static class IEnumerableExtensions
     {
         /// <summary>
@@ -76,6 +79,7 @@ namespace System
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items">Can't be null.</param>
+        /// <param name="errorIfNotOne">The error.</param>
         /// <returns></returns>
         public static Result<T> OnlyOneOrResult<T>(this IEnumerable<T> items, string errorIfNotOne)
         {

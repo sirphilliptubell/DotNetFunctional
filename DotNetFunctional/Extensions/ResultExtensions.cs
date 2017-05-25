@@ -146,7 +146,7 @@ namespace System
         /// Combines the Results, one at a time.
         /// Returns the first failure encountered, or a Success Result if there are no failures.
         /// </summary>
-        /// <param name="results">The results to combine.</param>
+        /// <param name="functions">The functions to combine.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
         public static Result CombineSequential(this IEnumerable<Func<Result>> functions)
@@ -168,7 +168,8 @@ namespace System
         /// Combines the Results of each function, one at a time.
         /// Returns the first failure encountered, or all the results if there are no failures.
         /// </summary>
-        /// <param name="results">The results to combine.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="functions">The functions to combine.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
         public static IEnumerable<Result<T>> CombineSequential<T>(this IEnumerable<Func<Result<T>>> functions)

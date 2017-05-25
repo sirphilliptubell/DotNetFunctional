@@ -79,6 +79,17 @@ namespace System
         }
 
         /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+            => IsSuccess
+            ? "Ok: " + Value.ToString()
+            : "Failure: " + Error;
+
+        /// <summary>
         /// Performs an implicit conversion from <see cref="Result{T}"/> to <see cref="Result"/>.
         /// </summary>
         /// <param name="result">The result.</param>
@@ -138,8 +149,7 @@ namespace System
         /// <summary>
         /// Returns a new Result regardless of whether this Result is a Success or Failure.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
+        /// <typeparam name="U"></typeparam>
         /// <param name="onBoth">The function whose result to return.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -150,8 +160,6 @@ namespace System
         /// Performs the specified Action if the Result is a Failure.
         /// Returns the same Result.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="whenFailure">Called when the Result is a Failure.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -167,8 +175,6 @@ namespace System
         /// If this Result is a Success, returns the same Result.
         /// If this Result is a Failure, returns a new Success Result with the specified value.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="results">The results.</param>
         /// <param name="whenFailure">The Success value to use when failure.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -181,8 +187,6 @@ namespace System
         /// Performs the specified Action if the Result is a Failure.
         /// Returns the same Result.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="whenFailure">Called if the Result is a Failure.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -198,8 +202,6 @@ namespace System
         /// If this Result is a Failure, returns the same Result.
         /// If this Result is a Success, maps the Success value to a new Success value.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="map">A function that returns a new result given the current instance's success value.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -215,9 +217,7 @@ namespace System
         /// If this Result is a Failure, returns the same result.
         /// If this Result is a Success, returns the new Result from the specified function.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="K"></typeparam>
-        /// <param name="result">The result.</param>
+        /// <typeparam name="U"></typeparam>
         /// <param name="nextResult">Gets the Result to return when the current Result is a Success.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -234,8 +234,6 @@ namespace System
         /// provided by the specified function.
         /// If this Result is a Failure, returns the same result.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="getResult">Gets the new Result when the current Result is a Success.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -249,9 +247,7 @@ namespace System
         /// specified function when passed the success value.
         /// If this Result is a Failure, returns the same result.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="K"></typeparam>
-        /// <param name="result">The result.</param>
+        /// <typeparam name="U"></typeparam>
         /// <param name="map">Gets the result to return, argument is the current success value.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -265,9 +261,7 @@ namespace System
         /// If this Result is a Success, returns a Success Result using the value from
         /// the specified function.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="K"></typeparam>
-        /// <param name="result">The result.</param>
+        /// <typeparam name="U"></typeparam>
         /// <param name="mapSuccessValue">Gets the new Success value to use when the current Result is a Success.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
@@ -281,8 +275,6 @@ namespace System
         /// If this Result is a Success, returns a new Result if the condition is
         /// true, otherwise returns the same Success Result.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result">The result.</param>
         /// <param name="condition">the condition to check.</param>
         /// <param name="whenTrue">The function whose value to return if the condition is true.</param>
         /// <returns></returns>
@@ -321,7 +313,6 @@ namespace System
         /// If this Result is a Success, performs the specified action using the success Value.
         /// Returns the same result.
         /// </summary>
-        /// <param name="result">The result.</param>
         /// <param name="action">The action.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
