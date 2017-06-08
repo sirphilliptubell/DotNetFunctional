@@ -135,8 +135,8 @@
         /// Returns a value depending on which state this instance is in.
         /// </summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
-        /// <param name="ifLeft">If left.</param>
-        /// <param name="ifRight">If right.</param>
+        /// <param name="ifLeft">The method to perform if this instance is in the left state.</param>
+        /// <param name="ifRight">The method to perform if this instance is in the right state.</param>
         /// <returns></returns>
         public TResult Return<TResult>(Func<TLeft, TResult> ifLeft, Func<TRight, TResult> ifRight)
         {
@@ -147,6 +147,27 @@
             return IsLeft
                 ? ifLeft(this.PeekLeft)
                 : ifRight(this.PeekRight);
+        }
+
+        /// <summary>
+        /// Performs an action depending on which state this instance is in.
+        /// </summary>
+        /// <param name="ifLeft">The action to perform if this instance is in the left state.</param>
+        /// <param name="ifRight">The action to perform if this instance is in the right state.</param>
+        /// <exception cref="ArgumentNullException">
+        /// ifLeft
+        /// or
+        /// ifRight
+        /// </exception>
+        public void Switch(Action<TLeft> ifLeft, Action<TRight> ifRight)
+        {
+            if (ifLeft == null) throw new ArgumentNullException(nameof(ifLeft));
+            if (ifRight == null) throw new ArgumentNullException(nameof(ifRight));
+
+            if (IsLeft)
+                ifLeft(this.PeekLeft);
+            else
+                ifRight(this.PeekRight);
         }
 
         /// <summary>
