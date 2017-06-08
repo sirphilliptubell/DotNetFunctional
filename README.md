@@ -153,8 +153,73 @@ Result Delete(FileInfo file)
     return Result.Ok();
 }
 ```
+Result objects can be used in a chain to express a series of events which should happen in order and of which any may fail. With all the examples below, when any of the inner functions fail, that result is returned and no further work is done.
+```csharp
+Result ValidateUserCanAccessDataStore() {
+    //returns a Success if the User has access, returns a failure otherwise
+    ...
+}
 
+Result<User> GetUserFromDataStore() {
+    //may return a failure if the data store isn't accessible for example 
+}
 
+Result SendEmail(User user) { ... }
+
+//These three examples are the same
+Result ExampleLong()
+{
+    var accessResult = ValidateUserCanAccessDataStore();
+    if (accessResult.IsFailure)
+        return accessResult; //forward the reason this function is failing. 
+
+    var userResult = GetUserFromDataStore();
+    if (userResult.IsFailure)
+        return userResult;
+	
+    var emailResult = SendEmail(userResult.Value);
+    return emailResult;
+}
+
+Result ExampleShort()
+    => ValidateUserCanAccessDataStore()
+    .OnSuccess(() => GetUserFromDataStore()) //OnSuccess(...) will return the Result<User> value provided by GetUserFromDataStore()
+    .OnSuccess(user => SendEmail(user));     //OnSuccess(...) will return the Result given by SendEmail()
+    
+Result ExampleReallyShort()
+    => ValidateUserCanAccessDataStore()
+    .OnSuccess(GetUserFromDataStore)
+    .OnSuccess(SendEmail);
+```
+You can use OnSuccessTee() to create a side effect.
+```csharp
+Result Example()
+    => ValidateUserCanAccessDataStore()
+    .OnSuccess(GetUserFromDataStore)
+    //Create a side effect
+    //Note that OnSuccessTee will return the same result returned by the above line
+    .OnSuccessTee(user => Console.WriteLine($"The User {user.Name} was successfully retrieved"))
+    .OnSuccess(SendEmail);
+```
+You can use OnFailure() to perform an action only when an error happens.
+```csharp
+Result ReturnsSuccessIfBlue(string color)
+    => color == "Blue"
+    ? Result.Ok()
+    : Result.Failure("Not blue");
+
+void DoSomething() { ... }
+
+void LogError(string error) { 
+    Console.WriteLine($"The error was {error}");
+}
+
+Result Example(string color)
+    => ReturnsSuccessIfBlue(color)
+    .OnSuccessTee(DoSomething)  //this is only called if the color given was "Blue"
+    .OnFailure(LogError)        //this is only called if the color is not "Blue"
+    .OnSuccessTee(DoSomething); //this is only called if the color given was "Blue"
+```
 
 
 # Additional Resources
