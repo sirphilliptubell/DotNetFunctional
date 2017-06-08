@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace System
+﻿namespace System
 {
     /// <summary>
     /// Helper class for Maybe{T}.

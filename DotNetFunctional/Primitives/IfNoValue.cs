@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace System
+﻿namespace System
 {
     /// <summary>
     /// Hidden implementation for IIfNoValue.
@@ -24,7 +22,7 @@ namespace System
         /// <param name="action">The action. Can't be null.</param>
         public void Else(Action action)
         {
-            Contract.Requires<ArgumentNullException>(action != null, nameof(action));
+            if (action == null) throw new ArgumentNullException(nameof(action));
 
             if (_ElseIsExecuted)
                 action();

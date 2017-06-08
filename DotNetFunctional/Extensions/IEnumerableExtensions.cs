@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace System
@@ -43,7 +42,7 @@ namespace System
         public static Maybe<T> OnlyOneOrMaybe<T>(this IEnumerable<T> items)
             where T : class
         {
-            Contract.Requires<ArgumentNullException>(items != null, nameof(items));
+            if (items == null) throw new ArgumentNullException(nameof(items));
 
             var found = items.Take(2).ToList();
 
@@ -63,7 +62,7 @@ namespace System
         public static T? OnlyOneOrNullable<T>(this IEnumerable<T> items)
             where T : struct
         {
-            Contract.Requires<ArgumentNullException>(items != null, nameof(items));
+            if (items == null) throw new ArgumentNullException(nameof(items));
 
             var found = items.Take(2).ToList();
 
@@ -83,7 +82,7 @@ namespace System
         /// <returns></returns>
         public static Result<T> OnlyOneOrResult<T>(this IEnumerable<T> items, string errorIfNotOne)
         {
-            Contract.Requires<ArgumentNullException>(items != null, nameof(items));
+            if (items == null) throw new ArgumentNullException(nameof(items));
 
             var found = items.Take(2).ToList();
 

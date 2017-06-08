@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace System
+﻿namespace System
 {
     /// <summary>
     /// Wrapper for a reference type which may or may not be null.
@@ -85,7 +83,7 @@ namespace System
         /// <returns></returns>
         public IIfNoValue IfValue(Action<T> action)
         {
-            Contract.Requires<ArgumentNullException>(action != null, nameof(action));
+            if (action == null) throw new ArgumentNullException(nameof(action));
 
             if (this.HasValue)
                 action(this.Value);

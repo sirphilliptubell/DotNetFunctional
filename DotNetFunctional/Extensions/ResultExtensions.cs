@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -62,8 +61,8 @@ namespace System
         [DebuggerStepThrough]
         public static Result CombineAll(this IEnumerable<Result> results, string errorMessagesSeparator = DEFAULT_SEPARATOR)
         {
-            Contract.Requires<ArgumentNullException>(results != null, nameof(results));
-            Contract.Requires<ArgumentNullException>(errorMessagesSeparator != null, nameof(errorMessagesSeparator));
+            if (results == null) throw new ArgumentNullException(nameof(results));
+            if (errorMessagesSeparator == null) throw new ArgumentNullException(nameof(errorMessagesSeparator));
 
             var errorSummary = CombineErrors(results.OnlyErrors(), errorMessagesSeparator);
 
@@ -85,8 +84,8 @@ namespace System
         [DebuggerStepThrough]
         public static Result<IEnumerable<T>> CombineAll<T>(this IEnumerable<Result<T>> results, string errorMessagesSeparator = DEFAULT_SEPARATOR)
         {
-            Contract.Requires<ArgumentNullException>(results != null, nameof(results));
-            Contract.Requires<ArgumentNullException>(errorMessagesSeparator != null, nameof(errorMessagesSeparator));
+            if (results == null) throw new ArgumentNullException(nameof(results));
+            if (errorMessagesSeparator == null) throw new ArgumentNullException(nameof(errorMessagesSeparator));
 
             //separate everything
             var segregated = Segregate(results);
@@ -110,7 +109,7 @@ namespace System
         [DebuggerStepThrough]
         public static Result CombineSequential(this IEnumerable<Result> results)
         {
-            Contract.Requires<ArgumentNullException>(results != null, nameof(results));
+            if (results == null) throw new ArgumentNullException(nameof(results));
 
             foreach (var result in results)
             {
@@ -131,7 +130,7 @@ namespace System
         [DebuggerStepThrough]
         public static Result CombineSequential<T>(this IEnumerable<Result<T>> results)
         {
-            Contract.Requires<ArgumentNullException>(results != null, nameof(results));
+            if (results == null) throw new ArgumentNullException(nameof(results));
 
             foreach (var result in results)
             {
@@ -151,8 +150,8 @@ namespace System
         [DebuggerStepThrough]
         public static Result CombineSequential(this IEnumerable<Func<Result>> functions)
         {
-            Contract.Requires<ArgumentNullException>(functions != null, nameof(functions));
-            Contract.Requires<ArgumentException>(!functions.Any(x => x == null), "one of the functions is null");
+            if (functions == null) throw new ArgumentNullException(nameof(functions));
+            if (functions.Any(x => x == null)) throw new ArgumentException("one of the functions is null");
 
             foreach (var function in functions)
             {
@@ -174,8 +173,8 @@ namespace System
         [DebuggerStepThrough]
         public static IEnumerable<Result<T>> CombineSequential<T>(this IEnumerable<Func<Result<T>>> functions)
         {
-            Contract.Requires<ArgumentNullException>(functions != null, nameof(functions));
-            Contract.Requires<ArgumentException>(!functions.Any(x => x == null), "one of the functions is null");
+            if (functions == null) throw new ArgumentNullException(nameof(functions));
+            if (functions.Any(x => x == null)) throw new ArgumentException("one of the functions is null");
 
             var results = new List<Result<T>>();
 
@@ -205,8 +204,8 @@ namespace System
         /// <returns></returns>
         public static List<T> AlterInPlace<T>(this List<T> list, Func<T, T> alterEntry)
         {
-            Contract.Requires<ArgumentNullException>(list != null, nameof(list));
-            Contract.Requires<ArgumentNullException>(alterEntry != null, nameof(alterEntry));
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            if (alterEntry == null) throw new ArgumentNullException(nameof(alterEntry));
 
             for (int i = 0; i < list.Count; i++)
                 list[i] = alterEntry(list[i]);
@@ -224,8 +223,8 @@ namespace System
         /// <returns></returns>
         public static T[] AlterInPlace<T>(this T[] list, Func<T, T> alterEntry)
         {
-            Contract.Requires<ArgumentNullException>(list != null, nameof(list));
-            Contract.Requires<ArgumentNullException>(alterEntry != null, nameof(alterEntry));
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            if (alterEntry == null) throw new ArgumentNullException(nameof(alterEntry));
 
             for (int i = 0; i < list.Length; i++)
                 list[i] = alterEntry(list[i]);
