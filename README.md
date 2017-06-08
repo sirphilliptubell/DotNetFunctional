@@ -93,7 +93,10 @@ There are multiple problems with the above code. Does the author of Middle know 
 
 The worst thing about exceptions is that they can happen. The second worst thing is that they are essentially a GOTO statement that can cause your program to jump over very large amounts of code and over multiple stack frames. Once they happen it's quite difficult to trust that your application's state is even valid anymore. In C-like programs, some authors would return an integer to indicate whether a function succeeded or not and different values could incidicate why. But a number doesn't tell very much. You may want to return your own value instead so returning an integer for all functions doesn't bode well. In [Midori](http://joeduffyblog.com/2016/02/07/the-error-model/#bugs-abandonment-assertions-and-contracts) Microsoft attempted to resolve this issue by making every function tell what exceptions it could throw and forced you to handle all of those (similar to Java.) Also in Midori, they separated errors into two types of errors. One type of error is the one you expect could happen (eg: a file not being found or a resource is unavailable). The other type of errors are ones where the developer made a mistake (eg: you tried to access an index outside the bounds of an array or a null value was given to a method which shouldn't take one). This would have been a better solution however this feature is not available in the current version of the .Net Framework.
 
-The Result object helps resolve these issues by letting your function's signature indicate that it may fail and optionally at the same time provide a return value.
+The Result object provides the following benefits:
+* You can separate expected errors (by returning a Result object) and developer errors (by throwing exceptions).
+* Your function's signature indicates that it may fail for an expected reason and the result will provide the reason.
+* Nested functions which return Result objects can bubble-up the error to the top most function where a detailed error message can tell you why some error occurred.
 
 ### Usage
 Use Result or Result&lt;T&gt; as a return type
