@@ -1,6 +1,8 @@
 # DotNetFunctional
 A Functional / Monadic library for .Net
 
+Available as a nuget package at [https://www.nuget.org/packages/DotNetFunctional/](https://www.nuget.org/packages/DotNetFunctional/)
+
 ## About
 This is a library of objects and extension method which can help you write functional style programming in .Net (in non-F# projects.) A portion of the code in this project was inspired by some of the videos in the Additional Resources section.
 
@@ -250,7 +252,7 @@ struct IntSpan {
   
     public Either<IntSpan?, Tuple<IntSpan, IntSpan>> Subtract(IntSpan other)
     {
-    	//
+    	// example outputs:
 	// this instance            {2, 3}             {1, 2, 3, 4}           {1, 2, 3, 4, 5, 6}
 	// other instance   -    {1, 2, 3, 4}     -    {1, 2}           -           {3, 4}
 	//                  -----------------     -----------------     ------------------------
