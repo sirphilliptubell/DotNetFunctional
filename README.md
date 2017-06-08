@@ -1,6 +1,8 @@
 # DotNetFunctional
 A Functional / Monadic library for .Net
 
+Available as a nuget package at [https://www.nuget.org/packages/DotNetFunctional/](https://www.nuget.org/packages/DotNetFunctional/)
+
 ## About
 This is a library of objects and extension method which can help you write functional style programming in .Net (in non-F# projects.) A portion of the code in this project was inspired by some of the videos in the Additional Resources section.
 
@@ -224,7 +226,7 @@ Result Example(string color)
     .OnSuccessTee(DoSomething); //this is only called if the color given was "Blue"
 ```
 ## The Either Type
-The Either type allows you to return two different types at once, where only one of the values is considered correct.
+The Either type allows you to return two different types at once, where only one of the values is considered correct. Both the Left and Right types should always be different, although this is not enforced in any way.
 ```csharp
 Either<int, string> GetNumberOne(bool returnAsInteger)
 {
@@ -242,7 +244,7 @@ void ConsumeExample(Either<int, string> number)
     	Console.WriteLine("First letter '{number.Right.SubString(0,1)}'");
 }
 ```
-As a practical example, suppose the type IntSpan is a container that contains a sequence of numbers. Suppose IntSpan contains a method which allows you to subtract another IntSpan. Both the Left and Right types should always be different, although this is not enforced in any way.
+As a practical example, suppose the type IntSpan is a container that contains a sequence of numbers. Suppose IntSpan contains a method which allows you to subtract another IntSpan.
 ```csharp
 struct IntSpan {
     public int First { get; set; }    
@@ -250,7 +252,7 @@ struct IntSpan {
   
     public Either<IntSpan?, Tuple<IntSpan, IntSpan>> Subtract(IntSpan other)
     {
-    	//
+    	// example outputs:
 	// this instance            {2, 3}             {1, 2, 3, 4}           {1, 2, 3, 4, 5, 6}
 	// other instance   -    {1, 2, 3, 4}     -    {1, 2}           -           {3, 4}
 	//                  -----------------     -----------------     ------------------------
