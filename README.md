@@ -223,7 +223,68 @@ Result Example(string color)
     .OnFailure(LogError)        //this is only called if the color is not "Blue"
     .OnSuccessTee(DoSomething); //this is only called if the color given was "Blue"
 ```
+## The Either Type
+The Either type allows you to return two different types at once, where only one of the values is considered correct.
+```csharp
+Either<int, string> GetNumberOne(bool returnAsInteger)
+{
+    if (returnAsInteger)
+	return 1;
+    else //return as text
+	return "one";
+}
 
+void ConsumeExample(Either<int, string> number)
+{
+    if (number.IsLeft) //The Left value is the int, the Right value is the string
+        Console.WriteLine($"One higher: {number.Left + 1}");
+    else
+    	Console.WriteLine("First letter '{number.Right.SubString(0,1)}'");
+}
+```
+As a practical example, suppose the type IntSpan is a container that contains a sequence of numbers. Suppose IntSpan contains a method which allows you to subtract another IntSpan. Both the Left and Right types should always be different, although this is not enforced in any way.
+```csharp
+struct IntSpan {
+    public int First { get; set; }    
+    public int Last { get; set; }
+  
+    public Either<IntSpan?, Tuple<IntSpan, IntSpan>> Subtract(IntSpan other)
+    {
+    	//
+	// this instance            {2, 3}             {1, 2, 3, 4}           {1, 2, 3, 4, 5, 6}
+	// other instance   -    {1, 2, 3, 4}     -    {1, 2}           -           {3, 4}
+	//                  -----------------     -----------------     ------------------------
+	// returns          default(IntSpan?)     new IntSpan(3, 4)     new Tuple(new IntSpan(1, 2), new IntSpan(5, 6))
+    }
+}
+
+IEnumerable<IntSpan> GetSubtractionResults(IntSpan value, IEnumerable<IntSpan> itemsToSubtract)
+{
+    var result = new List<IntSpan>();
+
+    foreach (var itemToSubtract in itemsToSubtract)
+    {
+        var x = value.Subtract(itemToSubtract);
+	
+	if (x.IsRight)
+	    Console.WriteLine($"Subtract() returned two values: {x.Right.Item1} and {x.Right.Item2}");
+	    
+        x.Switch(
+            left =>
+            {
+                if (left.HasValue)
+                    result.Add(left.Value);
+            },
+            right =>
+            {
+                result.Add(right.Item1);
+                result.Add(right.Item2);
+            });
+    }
+
+    return result;
+}
+```
 
 # Additional Resources
 * [Brian Beckman: Don't fear the Monad (YouTube)](https://www.youtube.com/watch?v=ZhuHCtR3xq8)
