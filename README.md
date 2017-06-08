@@ -226,7 +226,7 @@ Result Example(string color)
     .OnSuccessTee(DoSomething); //this is only called if the color given was "Blue"
 ```
 ## The Either Type
-The Either type allows you to return two different types at once, where only one of the values is considered correct.
+The Either type allows you to return two different types at once, where only one of the values is considered correct. Both the Left and Right types should always be different, although this is not enforced in any way.
 ```csharp
 Either<int, string> GetNumberOne(bool returnAsInteger)
 {
@@ -244,7 +244,7 @@ void ConsumeExample(Either<int, string> number)
     	Console.WriteLine("First letter '{number.Right.SubString(0,1)}'");
 }
 ```
-As a practical example, suppose the type IntSpan is a container that contains a sequence of numbers. Suppose IntSpan contains a method which allows you to subtract another IntSpan. Both the Left and Right types should always be different, although this is not enforced in any way.
+As a practical example, suppose the type IntSpan is a container that contains a sequence of numbers. Suppose IntSpan contains a method which allows you to subtract another IntSpan.
 ```csharp
 struct IntSpan {
     public int First { get; set; }    
