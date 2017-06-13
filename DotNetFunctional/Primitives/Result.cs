@@ -295,13 +295,13 @@ namespace System
         /// Converts the Result into a Result&lt;T&gt; of the specified Type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="item">The item.</param>
+        /// <param name="successValue">The value to use if this instance is a success result.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
-        public Result<T> ToTypedResult<T>(T item = default(T))
+        public Result<T> ToTypedResult<T>(T successValue = default(T))
             => this.IsFailure
             ? Result.Fail<T>(this.Error)
-            : Result.Ok(item);
+            : Result.Ok(successValue);
 
         #region Static versions of extension methods
 
@@ -315,7 +315,7 @@ namespace System
         /// <param name="results">The results to combine.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
-        public static Result CombineAll(IEnumerable<Result> results, string errorMessagesSeparator = ResultExtensions.DEFAULT_SEPARATOR)
+        public static Result CombineAll(IEnumerable<Result> results, string errorMessagesSeparator = DotNetFunctional_ResultExtensions.DEFAULT_SEPARATOR)
             => results.CombineAll(errorMessagesSeparator);
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace System
         /// <param name="results">The results to combine.</param>
         /// <returns></returns>
         [DebuggerStepThrough]
-        public static Result<IEnumerable<T>> CombineAll<T>(IEnumerable<Result<T>> results, string errorMessagesSeparator = ResultExtensions.DEFAULT_SEPARATOR)
+        public static Result<IEnumerable<T>> CombineAll<T>(IEnumerable<Result<T>> results, string errorMessagesSeparator = DotNetFunctional_ResultExtensions.DEFAULT_SEPARATOR)
             => results.CombineAll(errorMessagesSeparator);
 
         /// <summary>

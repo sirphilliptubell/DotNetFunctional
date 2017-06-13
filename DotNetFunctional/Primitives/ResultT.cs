@@ -90,6 +90,15 @@ namespace System
             : "Failure: " + Error;
 
         /// <summary>
+        /// Converts this generic typed Result into a standard Result.
+        /// </summary>
+        /// <returns></returns>
+        public Result ToResult()
+            => IsFailure
+            ? Result.Fail(Error)
+            : Result.Ok();
+
+        /// <summary>
         /// Performs an implicit conversion from <see cref="Result{T}"/> to <see cref="Result"/>.
         /// </summary>
         /// <param name="result">The result.</param>
