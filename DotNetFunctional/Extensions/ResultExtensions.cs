@@ -8,7 +8,7 @@ namespace System
     /// <summary>
     /// Extension methods for Result.
     /// </summary>
-    public static class ResultExtensions
+    public static class DotNetFunctional_ResultExtensions
     {
         internal const string DEFAULT_SEPARATOR = ", ";
 

@@ -7,7 +7,7 @@ namespace System
     /// <summary>
     /// Extension methods for IEnumerable
     /// </summary>
-    public static class IEnumerableExtensions
+    public static class DotNetFunctional_IEnumerableExtensions
     {
         /// <summary>
         /// Gets only the errors of the specified Result objects.
