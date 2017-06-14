@@ -93,10 +93,25 @@ namespace System
         /// Converts this generic typed Result into a standard Result.
         /// </summary>
         /// <returns></returns>
+        [DebuggerStepThrough]
         public Result ToResult()
             => IsFailure
             ? Result.Fail(Error)
             : Result.Ok();
+
+        /// <summary>
+        /// Converts the Result of this type into a Result of another type.
+        /// If this instance is a failure, a new result of the new type is returned with the same error.
+        /// If this instance is a success, a new result with the mapped type is returned as a success.
+        /// </summary>
+        /// <typeparam name="U">The type to map to</typeparam>
+        /// <param name="mapSuccessValue">A function that converts the success value.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public Result<U> ToTypedResult<U>(Func<T, U> mapSuccessValue)
+            => this.IsFailure
+            ? Result.Fail<U>(this.Error)
+            : Result.Ok(mapSuccessValue(this.Value));
 
         /// <summary>
         /// Performs an implicit conversion from <see cref="Result{T}"/> to <see cref="Result"/>.
