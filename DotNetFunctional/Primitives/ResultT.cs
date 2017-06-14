@@ -127,6 +127,13 @@ namespace System
             : Result.Fail(result.Error);
 
         /// <summary>
+        /// Performs an implicit convertion from an object into a typed success result.
+        /// </summary>
+        /// <param name="successItem"></param>
+        public static implicit operator Result<T>(T successItem)
+            => Result.Ok(successItem);
+
+        /// <summary>
         /// If this Result is a Failure, the same Result is returned.
         /// If this Result is a Success, returns a new Failure Result if the predicate is
         /// false, otherwise returns the same Success Result.
